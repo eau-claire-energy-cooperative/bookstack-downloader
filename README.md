@@ -5,7 +5,12 @@ Quickly export books, chapters, or pages from a [BookStack](https://www.bookstac
 
 ## Install
 
+Cloning and installing this repository will enable access to the `bookstack-downloader` tool via the command line. It is recommended to run this in a Python virtual environment.
+
 ```
+
+# clone the repository
+git clone https://github.com/eau-claire-energy-cooperative/bookstack-downloader
 
 # create the virtual environment
 python3 -m venv .venv
@@ -13,7 +18,8 @@ python3 -m venv .venv
 # activate and install dependencies
 source .venv/bin/activate
 
-# install the requirements
+# install the downloader
+pip3 install .
 
 ```
 
