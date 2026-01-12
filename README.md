@@ -25,6 +25,41 @@ pip3 install .
 
 ## Usage
 
+Once installed you can use the tool `bookstack-downloader` from the command line. Before you can connect to a BookStack instance you will need to generate a token ID and secret. You can find how to get these values from your BookStack instance's doc page at `http[s]://<example.com>/api/docs`.
+
+Run the tool with `-h` to see all the available command line options.
+
+```
+BookStack Downloader
+
+options:
+  -h, --help            show this help message and exit
+  -c CONFIG, --config CONFIG
+                        Path to custom config file
+
+Authentication:
+  -u URL, --url URL     base URL of the BookStack instance
+  -T TOKEN, --token TOKEN
+                        authorization token
+  -S SECRET, --secret SECRET
+                        authorization secret
+
+Download Settings:
+  -d DIRECTORY, --directory DIRECTORY
+                        directory to download PDFs
+  -s SHELF, --shelf SHELF
+                        The slugified version of the shelf to export
+  -b, --split-book      Split the book into separate PDFs instead of one big file
+```
+
+### Config File
+
+For ease of use, arguments can be put in a config file with the format `arg=value`, one per line. Pass in the path to the config file with the `-c` option.
+
+### Downloading Books
+
+Books are downloaded by shelf into PDF files. You pass in the slugified name of the shelf, which can be found in the URL for the shelf. As an example, if the shelf is called "Library Books" the slugified version is "library-books". By default each book will download to a single PDF file with all the chapters and pages. If you want to split up the contents even more the `-b` option will create a folder for the book and download each chapter or page to it's own PDF file. 
+
 ## License
 
 [GPLv3](/LICENSE)
