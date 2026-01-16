@@ -23,6 +23,16 @@ pip3 install .
 
 ```
 
+### Development
+
+If installing for development usage, edit the final installation line to allow for interactive editing of the source files.
+
+```
+
+pip3 install -e ".[dev]"
+
+```
+
 ## Usage
 
 Once installed you can use the tool `bookstack-downloader` from the command line. Before you can connect to a BookStack instance you will need to generate a token ID and secret. You can find how to get these values from your BookStack instance's doc page at `http[s]://<example.com>/api/docs`.
