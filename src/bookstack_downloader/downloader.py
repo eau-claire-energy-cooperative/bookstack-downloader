@@ -3,6 +3,7 @@ import configargparse
 import os
 import os.path
 
+
 class Downloader:
     api = None
     download_dir = "downloads"
@@ -35,7 +36,7 @@ class Downloader:
         book_info = self.api.get_books_read({'id': book_id})
         print(f"Extracting {book_info['name']}")
 
-        if(not split_book):
+        if (not split_book):
             # download the entire book
             pdf = self.api.get_books_export_pdf({"id": book_id})
             self._write_file(pdf, f"{os.path.join(self.download_dir, book_info['name'])}.pdf")
@@ -47,9 +48,9 @@ class Downloader:
             # for each chapter/page in the book, download it
             for item in book_info['contents']:
                 print(f"Saving {item['name']}: {item['type']}")
-                if(item['type'] == 'chapter'):
+                if (item['type'] == 'chapter'):
                     pdf = self.api.get_chapters_export_pdf({"id": item['id']})
-                elif(item['type'] == 'page'):
+                elif (item['type'] == 'page'):
                     pdf = self.api.get_pages_export_pdf({"id": item['id']})
                 self._write_file(pdf, f"{os.path.join(path, item['name'])}.pdf")
 
@@ -57,7 +58,7 @@ class Downloader:
         result = None
         shelves = self._load_shelves()
 
-        if(shelf_name in shelves):
+        if (shelf_name in shelves):
             result = self.api.get_shelves_read({"id": shelves[shelf_name]})
         else:
             print(f"{shelf_name} is not a valid shelf")
@@ -70,9 +71,9 @@ class Downloader:
         books = self.api.get_books_list()
 
         for b in books['data']:
-            if(b['slug'] == book_name):
+            if (b['slug'] == book_name):
                 result = b
-                break;
+                break
 
         return result
 
@@ -81,10 +82,12 @@ class Downloader:
 
         print(f"Connected to {info['app_name']} version {info['version']}")
 
+
 def create_folder(path):
-    if(not os.path.exists(path)):
+    if (not os.path.exists(path)):
         os.makedirs(path)
     return path
+
 
 def main():
     parser = configargparse.ArgumentParser(description='BookStack Downloader')
@@ -112,12 +115,12 @@ def main():
     downloader = Downloader(args.url, args.token, args.secret, args.directory)
     downloader.print_system_info()
 
-    if(args.shelf):
+    if (args.shelf):
         # try and find the shelf
         shelf = downloader.get_shelf(args.shelf)
 
-        if(shelf is not None):
-            if(len(shelf['books']) > 0):
+        if (shelf is not None):
+            if (len(shelf['books']) > 0):
                 print(f"{shelf['name']} has {len(shelf['books'])} books")
 
                 for b in shelf['books']:
@@ -128,11 +131,12 @@ def main():
         # try and find this book
         book = downloader.get_book(args.book)
 
-        if(book is not None):
+        if (book is not None):
             # download this book
             downloader.export_book(book['id'], args.split_book)
         else:
             print(f"{args.book} is not a valid book")
+
 
 if __name__ == '__main__':
     main()

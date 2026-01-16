@@ -1,4 +1,5 @@
 # BookStack Downloader
+[![PEP8](https://img.shields.io/badge/code%20style-pep8-orange.svg)](https://www.python.org/dev/peps/pep-0008/)
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg)](https://github.com/RichardLitt/standard-readme)
 
 Quickly export books, chapters, or pages from a [BookStack](https://www.bookstackapp.com) site for offline archiving.
