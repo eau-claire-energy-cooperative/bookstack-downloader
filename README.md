@@ -73,7 +73,11 @@ For ease of use, arguments can be put in a config file with the format `arg=valu
 
 ### Downloading Books
 
-Books are downloaded by shelf into PDF files. You pass in the slugified name of either a shelf (`-s`) or a single book (`-b`). These can be found in the URL for the object. As an example, if the shelf is called "Library Books" the slugified version is "library-books". By default each book will download to a single PDF file with all the chapters and pages. If you want to split up the contents even more the `--split-book` option will create a folder for the book and download each chapter or page to it's own PDF file.
+Books are downloaded by into PDF files. You pass in the slugified name of either a shelf (`-s`) or a single book (`-b`). These can be found in the URL for the object. As an example, if the shelf is called "Library Books" the slugified version is "library-books". By default each book will download to a single PDF file with all the chapters and pages. If you want to split up the contents even more the `--split-book` option will create a folder for the book and download each chapter or page to it's own PDF file.
+
+## Contributing
+
+This is an internal tool posted in the hopes it will help someone with a similar issue. Post an [Issue](https://github.com/eau-claire-energy-cooperative/bookstack-downloader/issues) for errors with base functionality but no enhancements beyond what we need for our use cases will be considered.
 
 ## License
 
