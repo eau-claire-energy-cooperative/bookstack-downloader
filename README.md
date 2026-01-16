@@ -59,11 +59,12 @@ Authentication:
 
 Download Settings:
   -d DIRECTORY, --directory DIRECTORY
-                        directory to download PDFs
+                        directory to download PDFs, default is downloads
   -s SHELF, --shelf SHELF
                         The slugified version of a shelf to export
   -b BOOK, --book BOOK  The slugged version of a book to export
   --split-book          Split the book into separate chapter/page PDFs instead of one big file
+  --dir-clear           Clears the downloads directory before export
 ```
 
 ### Config File

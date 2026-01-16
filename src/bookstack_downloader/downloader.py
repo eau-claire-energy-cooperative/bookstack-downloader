@@ -2,6 +2,7 @@ import bookstack
 import configargparse
 import os
 import os.path
+import shutil
 
 
 class Downloader:
@@ -101,15 +102,24 @@ def main():
 
     # configuration argu8ments
     config_group = parser.add_argument_group("Download Settings")
-    config_group.add_argument('-d', '--directory', required=False, default="downloads", help="directory to download PDFs")
+    config_group.add_argument('-d', '--directory', required=False, default="downloads", help="directory to download PDFs, default is %(default)s")
 
     mutually_ex = config_group.add_mutually_exclusive_group(required=True)
     mutually_ex.add_argument('-s', '--shelf', help="The slugified version of a shelf to export")
     mutually_ex.add_argument('-b', '--book', help="The slugged version of a book to export")
 
     config_group.add_argument('--split-book', action='store_true', help='Split the book into separate chapter/page PDFs instead of one big file')
+    config_group.add_argument('--dir-clear', action='store_true', help="Clears the downloads directory before export")
 
     args = parser.parse_args()
+
+    if (args.dir_clear):
+        print(f"Clearing {args.directory} before export")
+        if (os.path.exists(args.directory)):
+            shutil.rmtree(args.directory)
+
+    # create the downloads directory
+    create_folder(args.directory)
 
     # try and connect to the api
     downloader = Downloader(args.url, args.token, args.secret, args.directory)
