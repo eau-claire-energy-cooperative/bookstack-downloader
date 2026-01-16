@@ -86,7 +86,7 @@ def main():
     config_group = parser.add_argument_group("Download Settings")
     config_group.add_argument('-d', '--directory', required=False, default="downloads", help="directory to download PDFs")
     config_group.add_argument('-s', '--shelf', required=True, help="The slugified version of the shelf to export")
-    config_group.add_argument('-i', '--split-book', action='store_true', help='Split the book into separate chapter/page PDFs instead of one big file')
+    config_group.add_argument('--split-book', action='store_true', help='Split the book into separate chapter/page PDFs instead of one big file')
     args = parser.parse_args()
 
     # try and connect to the api
