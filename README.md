@@ -41,7 +41,7 @@ Once installed you can use the tool `bookstack-downloader` from the command line
 Run the tool with `-h` to see all the available command line options.
 
 ```
-usage: bookstack-downloader [-h] [-c CONFIG] -u URL -T TOKEN -S SECRET [-d DIRECTORY] (-s SHELF | -b BOOK) [--split-book]
+usage: bookstack-downloader [-h] [-c CONFIG] -u URL -T TOKEN -S SECRET [-d DIRECTORY] (-s SHELF | -b BOOK) [--dir-clear | --modified-only] [--split-book] [--test]
 
 BookStack Downloader
 
@@ -63,9 +63,10 @@ Download Settings:
   -s SHELF, --shelf SHELF
                         The slugified version of a shelf to export
   -b BOOK, --book BOOK  The slugged version of a book to export
-  --split-book          Split the book into separate chapter/page PDFs instead of one big file
   --dir-clear           Clears the downloads directory before export
-  --test_mode           Runs in test mode, will not actually download PDF files
+  --modified-only       Only download if books/chapters/pages changed since last run
+  --split-book          Split the book into separate chapter/page PDFs instead of one big file
+  --test                Runs in test mode, will not download or modify any files
 ```
 
 ### Config File
@@ -75,6 +76,12 @@ For ease of use, arguments can be put in a config file with the format `arg=valu
 ### Downloading Books
 
 Books are downloaded by into PDF files. You pass in the slugified name of either a shelf (`-s`) or a single book (`-b`). These can be found in the URL for the object. As an example, if the shelf is called "Library Books" the slugified version is "library-books". By default each book will download to a single PDF file with all the chapters and pages. If you want to split up the contents even more the `--split-book` option will create a folder for the book and download each chapter or page to it's own PDF file.
+
+### Downloading Modified Only
+
+It is possible to only download content that has changed since the last run of the script. To do this use the `--modified-only` flag. When this is turned on, the first time run all content will be downloaded. You'll notice a text file in the downloads directory called `last_run.txt`. This contains the date/time of the last run of the script. On the next run this date will be used to compare the updated date for all books, chapters, and pages selected for download. Only those that have been updated since the last run will be downloaded.
+
+__Note:__ That if a single page within a book is updated, the entire book will be downloaded. This is true even if `--split-book` is being used.
 
 ## Contributing
 

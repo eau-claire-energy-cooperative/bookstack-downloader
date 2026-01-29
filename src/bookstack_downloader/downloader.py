@@ -185,7 +185,7 @@ def main():
     mutually_ex2.add_argument('--modified-only', action='store_true', help="Only download if books/chapters/pages changed since last run")
 
     config_group.add_argument('--split-book', action='store_true', help='Split the book into separate chapter/page PDFs instead of one big file')
-    config_group.add_argument('--test', action="store_true", help="Runs in test mode, will not actually download PDF files")
+    config_group.add_argument('--test', action="store_true", help="Runs in test mode, will not download or modify any files")
 
     args = parser.parse_args()
 
