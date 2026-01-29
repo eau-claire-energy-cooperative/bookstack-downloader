@@ -7,7 +7,7 @@ import shutil
 import time
 
 
-LAST_RUN_FILE = 'last_run.txt'
+LAST_RUN_FILE = '.last_run'
 
 
 class Downloader:

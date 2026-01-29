@@ -79,7 +79,7 @@ Books are downloaded by into PDF files. You pass in the slugified name of either
 
 ### Downloading Modified Only
 
-It is possible to only download content that has changed since the last run of the script. To do this use the `--modified-only` flag. When this is turned on, the first time run all content will be downloaded. You'll notice a text file in the downloads directory called `last_run.txt`. This contains the date/time of the last run of the script. On the next run this date will be used to compare the updated date for all books, chapters, and pages selected for download. Only those that have been updated since the last run will be downloaded.
+It is possible to only download content that has changed since the last run of the script. To do this use the `--modified-only` flag. When this is turned on, the first time run all content will be downloaded. You'll notice a text file in the downloads directory called `.last_run`. This contains the date/time of the last run of the script. On the next run this date will be used to compare the updated date for all books, chapters, and pages selected for download. Only those that have been updated since the last run will be downloaded.
 
 __Note:__ That if a single page within a book is updated, the entire book will be downloaded. This is true even if `--split-book` is being used.
 
