@@ -79,10 +79,11 @@ class Downloader:
         if (should_download):
             print(f"Extracting {book_info['name']}")
 
-            if (not split_book and not self.test_mode):
-                # download the entire book
-                pdf = self.api.get_books_export_pdf({"id": book_id})
-                self._write_file(pdf, f"{os.path.join(self.download_dir, book_info['name'])}.pdf")
+            if (not split_book):
+                if(not self.test_mode):
+                    # download the entire book
+                    pdf = self.api.get_books_export_pdf({"id": book_id})
+                    self._write_file(pdf, f"{os.path.join(self.download_dir, book_info['name'])}.pdf")
 
             else:
                 if (self.test_mode):
