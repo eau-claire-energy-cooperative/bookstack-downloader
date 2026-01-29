@@ -45,7 +45,7 @@ class Downloader:
             self._write_file(pdf, f"{os.path.join(self.download_dir, book_info['name'])}.pdf")
 
         else:
-            if(self.test_mode):
+            if (self.test_mode):
                 for item in book_info['contents']:
                     print(f"Saving {item['name']}: {item['type']}")
             else:
@@ -88,7 +88,7 @@ class Downloader:
     def print_system_info(self):
         info = self.api.get_system_read()
 
-        if(self.test_mode):
+        if (self.test_mode):
             print("Running in TEST MODE - no files will be downloaded")
 
         print(f"Connected to {info['app_name']} version {info['version']}")
