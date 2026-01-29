@@ -8,10 +8,12 @@ import shutil
 class Downloader:
     api = None
     download_dir = "downloads"
+    test_mode = False
 
-    def __init__(self, url, token, secret, download_dir):
+    def __init__(self, url, token, secret, download_dir, test_mode=False):
         self.api = bookstack.BookStack(url, token_id=token, token_secret=secret)
         self.download_dir = download_dir
+        self.test_mode = test_mode
 
         # generate these at the start or it won't work
         self.api.generate_api_methods()
@@ -37,23 +39,28 @@ class Downloader:
         book_info = self.api.get_books_read({'id': book_id})
         print(f"Extracting {book_info['name']}")
 
-        if (not split_book):
+        if (not split_book and not self.test_mode):
             # download the entire book
             pdf = self.api.get_books_export_pdf({"id": book_id})
             self._write_file(pdf, f"{os.path.join(self.download_dir, book_info['name'])}.pdf")
 
         else:
-            # create a download path specific to this book
-            path = create_folder(f"{self.download_dir}/{book_info['name']}")
+            if(self.test_mode):
+                for item in book_info['contents']:
+                    print(f"Saving {item['name']}: {item['type']}")
+            else:
+                # create a download path specific to this book
+                path = create_folder(f"{self.download_dir}/{book_info['name']}")
 
-            # for each chapter/page in the book, download it
-            for item in book_info['contents']:
-                print(f"Saving {item['name']}: {item['type']}")
-                if (item['type'] == 'chapter'):
-                    pdf = self.api.get_chapters_export_pdf({"id": item['id']})
-                elif (item['type'] == 'page'):
-                    pdf = self.api.get_pages_export_pdf({"id": item['id']})
-                self._write_file(pdf, f"{os.path.join(path, item['name'])}.pdf")
+                # for each chapter/page in the book, download it
+                for item in book_info['contents']:
+                    print(f"Saving {item['name']}: {item['type']}")
+
+                    if (item['type'] == 'chapter'):
+                        pdf = self.api.get_chapters_export_pdf({"id": item['id']})
+                    elif (item['type'] == 'page'):
+                        pdf = self.api.get_pages_export_pdf({"id": item['id']})
+                    self._write_file(pdf, f"{os.path.join(path, item['name'])}.pdf")
 
     def get_shelf(self, shelf_name):
         result = None
@@ -81,6 +88,9 @@ class Downloader:
     def print_system_info(self):
         info = self.api.get_system_read()
 
+        if(self.test_mode):
+            print("Running in TEST MODE - no files will be downloaded")
+
         print(f"Connected to {info['app_name']} version {info['version']}")
 
 
@@ -100,7 +110,7 @@ def main():
     auth_group.add_argument('-T', '--token', required=True, help='authorization token')
     auth_group.add_argument('-S', '--secret', required=True, help='authorization secret')
 
-    # configuration argu8ments
+    # configuration arguments
     config_group = parser.add_argument_group("Download Settings")
     config_group.add_argument('-d', '--directory', required=False, default="downloads", help="directory to download PDFs, default is %(default)s")
 
@@ -110,10 +120,11 @@ def main():
 
     config_group.add_argument('--split-book', action='store_true', help='Split the book into separate chapter/page PDFs instead of one big file')
     config_group.add_argument('--dir-clear', action='store_true', help="Clears the downloads directory before export")
+    config_group.add_argument('--test', action="store_true", help="Runs in test mode, will not actually download PDF files")
 
     args = parser.parse_args()
 
-    if (args.dir_clear):
+    if (args.dir_clear and not args.test):
         print(f"Clearing {args.directory} before export")
         if (os.path.exists(args.directory)):
             shutil.rmtree(args.directory)
@@ -122,7 +133,7 @@ def main():
     create_folder(args.directory)
 
     # try and connect to the api
-    downloader = Downloader(args.url, args.token, args.secret, args.directory)
+    downloader = Downloader(args.url, args.token, args.secret, args.directory, args.test)
     downloader.print_system_info()
 
     if (args.shelf):

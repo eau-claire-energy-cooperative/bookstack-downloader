@@ -65,6 +65,7 @@ Download Settings:
   -b BOOK, --book BOOK  The slugged version of a book to export
   --split-book          Split the book into separate chapter/page PDFs instead of one big file
   --dir-clear           Clears the downloads directory before export
+  --test_mode           Runs in test mode, will not actually download PDF files
 ```
 
 ### Config File
